@@ -65,7 +65,7 @@ object QRGenerator {
             paintAndSave(hash,"QR_${qReq.importe}",onResult)
 
         }catch (e: Exception){
-            println("💥 Error Crítico: ${e.message}")
+            println("💥 Critical error: ${e.message}")
         }
 
     }
