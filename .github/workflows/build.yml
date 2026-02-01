@@ -31,12 +31,12 @@ jobs:
       - name: Generar EXE para Windows
         if: runner.os == 'Windows'
         run:  |
-              jpackage --input build/libs --name QRGenerator --main-jar *-all.jar --main-class MainKt --type exe --app-version 1.0.0 --win-dir-chooser --win-menu --icon "installer/app-icon.ico" --dest dist
+              jpackage --input build/libs --name QRGenerator --main-jar *-all.jar --main-class MainKt --type exe --app-version 1.0.0 --win-dir-chooser --win-menu --icon "installer/icono-cuy.ico" --dest dist
       
       - name: Generador DMG para Mac
         if: runner.os == 'macOS'
         run:  |
-              jpackage --input build/libs --name QRGenerator --main-jar *-all.jar --main-class MainKt --type dmg --app-version 1.0.0 --icon "installer/app-icon.icns" --dest dist
+              jpackage --input build/libs --name QRGenerator --main-jar *-all.jar --main-class MainKt --type dmg --app-version 1.0.0 --icon "installer/icono-cuy.icns" --dest dist
 
       - name: Subiendo instalador cuyico para Windows
         if: runner.os == 'Windows'
