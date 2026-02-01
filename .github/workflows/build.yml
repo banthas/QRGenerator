@@ -36,7 +36,7 @@ jobs:
       - name: Generador DMG para Mac
         if: runner.os == 'macOS'
         run:  |
-              jpackage --input build/libs --name QRGenerator --main-jar *-all.jar --main-class MainKt --type dmg --app-version 1.0.0 --icon "installer/app-icon.icns --dest dist
+              jpackage --input build/libs --name QRGenerator --main-jar *-all.jar --main-class MainKt --type dmg --app-version 1.0.0 --icon "installer/app-icon.icns" --dest dist
 
       - name: Subiendo instalador cuyico para Windows
         if: runner.os == 'Windows'
