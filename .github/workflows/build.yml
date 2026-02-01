@@ -30,14 +30,41 @@ jobs:
       
       - name: Generar EXE para Windows
         if: runner.os == 'Windows'
-        run:  |
-              jpackage --input build/libs --name QRGenerator --main-jar *-all.jar --main-class MainKt --type exe --app-version 1.0.0 --win-dir-chooser --win-menu --icon "installer/app-icon.ico" --dest dist
-      
+        run: |
+          # 1. Buscamos el nombre exacto del archivo JAR
+          $jarPath = Get-ChildItem build/libs/*-all.jar | Select-Object -First 1
+          $jarName = $jarPath.Name
+          Write-Host "El JAR encontrado es: $jarName"
+          
+          # 2. Ejecutamos jpackage usando esa variable
+          jpackage --input build/libs `
+            --name QRGenerator `
+            --main-jar $jarName `
+            --main-class MainKt `
+            --type exe `
+            --app-version 1.0.0 `
+            --win-dir-chooser `
+            --win-menu `
+            --icon "installer/icono-cuy.ico" `
+            --dest dist
+            
       - name: Generador DMG para Mac
         if: runner.os == 'macOS'
-        run:  |
-              jpackage --input build/libs --name QRGenerator --main-jar *-all.jar --main-class MainKt --type dmg --app-version 1.0.0 --icon "installer/app-icon.icns --dest dist
-
+        run: |
+          # 1. Buscamos el nombre exacto del archivo JAR dentro de build/libs
+          JAR_NAME=$(ls build/libs | grep "all.jar" | head -n 1)
+          echo "El JAR encontrado es: $JAR_NAME"
+          
+          # 2. Ejecutamos jpackage usando esa variable
+          jpackage --input build/libs \
+            --name QRGenerator \
+            --main-jar "$JAR_NAME" \
+            --main-class MainKt \
+            --type dmg \
+            --app-version 1.0.0 \
+            --icon "installer/icono-cuy.icns" \
+            --dest dist
+            
       - name: Subiendo instalador cuyico para Windows
         if: runner.os == 'Windows'
         uses: actions/upload-artifact@v4
