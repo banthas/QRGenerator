@@ -45,7 +45,7 @@ jobs:
             --app-version 1.0.0 `
             --win-dir-chooser `
             --win-menu `
-            --icon "installer/app-icon.ico" `
+            --icon "installer/icono-cuy.ico" `
             --dest dist
             
       - name: Generador DMG para Mac
