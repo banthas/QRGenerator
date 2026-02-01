@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
+
     // 1. Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -25,6 +25,11 @@ dependencies {
 
     // 3. Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+
+    // 4. Tests
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+    testImplementation("io.mockk:mockk:1.13.8")
+    testImplementation(kotlin("test"))
 }
 
 application{

@@ -22,7 +22,8 @@ class QRGeneratorTest {
     @Test
     @DisplayName("Invalid data")
     fun invalidDataTest() {
-       QRGenerator.generateQr(qrCobro)
+       QRGenerator.generateQr(qrCobro){}
+
     }
 
 }
