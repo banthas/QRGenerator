@@ -1,4 +1,4 @@
-name: Build QR Generator 🐹
+name: Build QR Generator Installers 🐹
 
 on:
   push:
@@ -6,29 +6,53 @@ on:
   pull_request:
     branches: ["main"]
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build-installers:
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{matrix.os}}
     steps:
       - name: Checkout del código
         uses: actions/checkout@v4
       
-      - name: Configurar JDK 21
+      - name: Configurar JDK 21 (incluimos jpackage cuy) 
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
 
       - name: Dando permisos a Gradle
+        if: runner.os != 'Windows'
         run: chmod +x gradlew
 
       - name: Ejecutar Shadowjar
         run: ./gradlew shadowJar
+      
+      - name: Generar EXE para Windows
+        if: runner.os == 'Windows'
+        run:  |
+              jpackage --input build/libs --name QRGenerator --main-jar *-all.jar --main-class MainKt --type exe --app-version 1.0.0 --win-dir-chooser --win-menu --icon "installer/app-icon.ico" --dest dist
+      
+      - name: Generador DMG para Mac
+        if: runner.os == 'macOS'
+        run:  |
+              jpackage --input build/libs --name QRGenerator --main-jar *-all.jar --main-class MainKt --type dmg --app-version 1.0.0 --icon "installer/app-icon.icns --dest dist
 
-      - name: Subiendo artefacto cuyico
+      - name: Subiendo instalador cuyico para Windows
+        if: runner.os == 'Windows'
         uses: actions/upload-artifact@v4
         with:
-          name: QRGenerator
-          path: build/libs/*-all.jar
+          name: QRGenerator-windows
+          path: dist/*.exe
           retention-days: 5
+
+      - name: Subiendo instalador cuyico para Mac
+        if: runner.os == 'macOS'
+        uses: actions/upload-artifact@v4
+        with:
+          name: QRGenerator-macos
+          path: dist/*.dmg
+          retention-days: 5
+          
       
       
