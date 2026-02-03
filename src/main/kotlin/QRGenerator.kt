@@ -23,17 +23,18 @@ object QRGenerator {
 
     fun paintAndSave(contenido: String, nombreArchivo: String, onImageSaved: (String) -> Unit) {
         try {
-                val textoLimpio = contenido.substringAfter("base64,")
+            val textoLimpio = contenido.substringAfter("base64,")
 
-                val imageBytes = Base64.getDecoder().decode(textoLimpio)
+            val imageBytes = Base64.getDecoder().decode(textoLimpio)
 
-                val bis = ByteArrayInputStream(imageBytes)
-                val imagen = ImageIO.read(bis)
+            val bis = ByteArrayInputStream(imageBytes)
+            val imagen = ImageIO.read(bis)
+            val tempDir = System.getProperty("java.io.tmpdir")
+            val archivoSalida = File(tempDir, "$nombreArchivo.png")
 
-                val archivoSalida = File("$nombreArchivo.png")
-                ImageIO.write(imagen, "png", archivoSalida)
-                println("✅ Success: QR saved: ${archivoSalida.absolutePath}")
-                onImageSaved(archivoSalida.absolutePath)
+            ImageIO.write(imagen, "png", archivoSalida)
+            println("✅ Success: QR saved: ${archivoSalida.absolutePath}")
+            onImageSaved(archivoSalida.absolutePath)
 
         } catch (e: Exception) {
             println("❌ Error: failed to generate the QR code, service error")

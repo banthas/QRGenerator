@@ -65,7 +65,7 @@ class QRGeneratorUI: JFrame("QR Code generation") {
 
     init {
         layout = BorderLayout()
-        setSize(900,900)
+        setSize(900,800)
         defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         setLocationRelativeTo(null)
         isVisible = true
