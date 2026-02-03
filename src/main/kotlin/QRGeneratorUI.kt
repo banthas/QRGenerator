@@ -65,7 +65,7 @@ class QRGeneratorUI: JFrame("QR Code generation") {
 
     init {
         layout = BorderLayout()
-        setSize(900,700)
+        setSize(900,900)
         defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         setLocationRelativeTo(null)
         isVisible = true
@@ -75,7 +75,7 @@ class QRGeneratorUI: JFrame("QR Code generation") {
         gbc.fill = GridBagConstraints.HORIZONTAL
         gbc.anchor = GridBagConstraints.WEST
 
-        val panel = JPanel(BorderLayout())
+        val panel = JPanel(BorderLayout(0,20))
         panel.background =colorBackground
         panel.border= EmptyBorder(20,20,20,20)
         add(panel)
@@ -99,7 +99,7 @@ class QRGeneratorUI: JFrame("QR Code generation") {
             field.foreground = Color.WHITE
             field.caretColor = Color.WHITE
             field.margin = Insets(5, 5, 5, 5)
-            field.preferredSize = java.awt.Dimension(100,25)
+            field.preferredSize = java.awt.Dimension(100,35)
             field.border = CompoundBorder(
                 LineBorder(Color.gray),
                 EmptyBorder(8,10,8,10)
@@ -128,7 +128,7 @@ class QRGeneratorUI: JFrame("QR Code generation") {
 
         addLabel("Amount (Cents):", 0)
         styleInput(txtAmount)
-        txtAmount.setLimit(7)
+        txtAmount.setNumericLimit(7)
         addComponent(txtAmount, 0)
 
         addLabel("Detail:", 1)
@@ -151,7 +151,7 @@ class QRGeneratorUI: JFrame("QR Code generation") {
 
         addLabel("Duration (in minutes)", 4)
         styleInput(txtDuration)
-        txtDuration.setLimit(2)
+        txtDuration.setNumericLimit(2)
         addComponent(txtDuration, 4)
 
         topContainer.add(formPanel)
@@ -183,18 +183,17 @@ class QRGeneratorUI: JFrame("QR Code generation") {
 
         val scroll = JScrollPane(txtLogArea)
         scroll.border= BorderFactory.createTitledBorder(
-            LineBorder(Color.GRAY,1),
+            LineBorder(Color.gray,1),
             "🐹Execution Console",
             javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
             javax.swing.border.TitledBorder.DEFAULT_POSITION,
-            Font("Segoe UI", Font.BOLD, 12),
+            Font("Arial", Font.BOLD, 10),
             Color.WHITE
         )
 
         scroll.background=colorBackground
 
         val splitPane = JSplitPane()
-
         val scrollImagen = JScrollPane(imageQR)
         scrollImagen.border = BorderFactory.createTitledBorder("QR Preview")
 
@@ -216,25 +215,25 @@ class QRGeneratorUI: JFrame("QR Code generation") {
     fun validations(){
 
         if(txtAmount.text.isBlank() || txtAmount.text.toLongOrNull() == null){
-            JOptionPane.showMessageDialog(this, "⚠️Please input a valid numeric amount.", "Validation Error",
+            JOptionPane.showMessageDialog(this, "Please input a valid numeric amount.", "Validation Error",
                 JOptionPane.WARNING_MESSAGE)
             return
         }
 
         if(txtDetail.text.isBlank()){
-            JOptionPane.showMessageDialog(this, "⚠️Please enter a detail description.", "Validation Error",
+            JOptionPane.showMessageDialog(this, "Please enter a detail description.", "Validation Error",
                 JOptionPane.WARNING_MESSAGE)
             return
         }
         val tipo = cmbUnique.selectedItem as String
         if (tipo.isBlank()){
-            JOptionPane.showMessageDialog(this, "⚠️Please select a valid value.", "Validation Error",
+            JOptionPane.showMessageDialog(this, "Please select a valid value.", "Validation Error",
                 JOptionPane.WARNING_MESSAGE)
             return
         }
 
         if(txtDuration.text.isBlank()|| txtDuration.text.toLongOrNull() == null){
-            JOptionPane.showMessageDialog(this, "⚠️Please input a valid duration in minutes.", "Validation Error",
+            JOptionPane.showMessageDialog(this, "Please input a valid duration in minutes.", "Validation Error",
                 JOptionPane.WARNING_MESSAGE)
             return
         }
