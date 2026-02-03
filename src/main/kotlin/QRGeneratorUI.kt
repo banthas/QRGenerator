@@ -89,6 +89,11 @@ class QRGeneratorUI: JFrame("QR Code generation") {
         formPanel.background = colorBackground
         formPanel.border = EmptyBorder(0, 0, 30, 0)
 
+        val isWindows = System.getProperty("os.name").lowercase().contains("win")
+
+        val emojiFont = if (isWindows) Font("Segoe UI Emoji", Font.PLAIN, 10) else Font("Arial", Font.PLAIN, 10)
+        val buttonFont = if (isWindows) Font("Segoe UI Emoji", Font.BOLD, 16) else Font("Arial", Font.BOLD, 14)
+
 
         val fontLabel = Font("Arial", Font.BOLD, 14)
         val fontText=Font("Arial", Font.PLAIN, 12)
@@ -157,7 +162,7 @@ class QRGeneratorUI: JFrame("QR Code generation") {
         topContainer.add(formPanel)
 
         // Bottom Panel
-        btnRun.font = Font("Segoe UI", Font.BOLD, 16)
+        btnRun.font = buttonFont
         btnRun.background = colorButton
         btnRun.foreground = colorButtonText
         btnRun.isFocusPainted = false
@@ -187,7 +192,7 @@ class QRGeneratorUI: JFrame("QR Code generation") {
             "🐹Execution Console",
             javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
             javax.swing.border.TitledBorder.DEFAULT_POSITION,
-            Font("Arial", Font.BOLD, 10),
+            emojiFont,
             Color.WHITE
         )
 
