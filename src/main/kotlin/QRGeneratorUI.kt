@@ -181,7 +181,7 @@ class QRGeneratorUI: JFrame("QR Code generation") {
         txtLogArea.isEditable=false
         txtLogArea.background = colorConsoleBg
         txtLogArea.foreground = colorConsoleText
-        txtLogArea.font = Font("Arial", Font.PLAIN, 12)
+        txtLogArea.font = emojiFont
         txtLogArea.margin = Insets(20, 20, 20, 20)
         txtLogArea.lineWrap=true
         txtLogArea.wrapStyleWord = true
