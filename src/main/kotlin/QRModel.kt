@@ -1,3 +1,20 @@
+
+//deposit data
+
+data class depositRequest(
+    val event: String = "deposit.deposit.statusUpdated",
+    val customerId: String = "56",
+    val data: depositData,
+    val identityId: String = "id_9garKyuDC8fxZvO49IhEU",
+    val createdAt: String = "2025-09-04T20:43:31.233Z"
+)
+
+data class depositData(
+    val status: String = "DEPOSITED",
+    val type: String = "CASH",
+    val depositId: String = "dp_gtDkjXyZIT6fJs6VXYZKK",
+    val depositReference: String // Este es el valor que traerás de la UI (el "xxx")
+)
 // Request
 
 data class qrRequest(

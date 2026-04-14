@@ -1,4 +1,5 @@
 
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.awt.Image
@@ -7,13 +8,31 @@ import java.io.File
 import java.util.Base64
 import java.util.concurrent.TimeUnit
 import javax.imageio.ImageIO
+import java.security.cert.X509Certificate
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
+
 import javax.swing.ImageIcon
 import kotlin.String
-
 object QRGenerator {
-  private val httpClient = okhttp3.OkHttpClient.Builder()
-      .connectTimeout(30, TimeUnit.SECONDS)
-      .readTimeout(30, TimeUnit.SECONDS).build()
+
+    private val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+        override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
+        override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
+        override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+    })
+
+    private val sslContext = SSLContext.getInstance("SSL").apply {
+        init(null, trustAllCerts, java.security.SecureRandom())
+    }
+
+    private val httpClient = OkHttpClient.Builder()
+        .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
+        .hostnameVerifier { _, _ -> true }
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .build()
 
     private val urlSV = Retrofit.Builder()
         .baseUrl("https://testing.tesabiz.com/")
