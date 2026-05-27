@@ -31,7 +31,7 @@ jobs:
       - name: Generar EXE para Windows
         if: runner.os == 'Windows'
         run: |
-          # 1. Buscamos el nombre exacto del archivo JAR
+          # 1. Buscamos el nombre exacto del archivo JAR cuy
           $jarPath = Get-ChildItem build/libs/*-all.jar | Select-Object -First 1
           $jarName = $jarPath.Name
           Write-Host "El JAR encontrado es: $jarName"
